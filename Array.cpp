@@ -31,7 +31,7 @@ void Array::MDEL(const int& index) {
 }
 
 void Array::MREPL(const int& index, string& value) {
-    data[index] = value; 
+    data[index] = " " + value + " "; 
 }
 
 int Array::MSIZE() {
