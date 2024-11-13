@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <cstring>
 using namespace std;
 #include "header.h"
 
@@ -38,18 +39,53 @@ void WritingFromStructureToFile(T& structure, const string& filename ) {
     FileWrite.close();
 }
 
-int main()
+
+void inputArguments(int argc, char* argv[], string &filename, string &query) {
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "--file") == 0) {
+            if (i + 1 < argc) {  
+                filename = argv[i + 1]; 
+                i++; 
+            } else {
+                cerr << "ERROR!!!!! Missing --file" << endl;
+                exit(1);
+            }
+        } else if (strcmp(argv[i], "--query") == 0) {  
+            if (i + 1 < argc) {  
+                query = argv[i + 1];  
+                i++; 
+            } else {
+                cerr << "ERROR!!!!! Missing --query" << endl;
+                exit(1);
+            }
+        }
+    }
+}
+
+
+int main(int argc, char* argv[])
 {
-    cout << "HELLO!\n";
-    try { 
-    while (true) {
+
+    string filenameConsole = "";
+    string queryConsole = "";
+    string command;
+    inputArguments(argc, argv, filenameConsole, queryConsole);
+
+    if (queryConsole.empty()) {
         string command;
+        cout << "Enter the command: ";
+        getline(cin, command);  
+        queryConsole = command;  
+    }
+
+    try {
+    
         string commandWord;
         string name;
         string element;
         string index;
 
-        cout << endl << "Enter the command: ";
+        command = queryConsole; 
 
         Array array;
         Queue queue;
@@ -58,7 +94,6 @@ int main()
         TwoList twolist;
         AVL avl;
         HashTable hashtable;
-        getline(cin, command);
         stringstream ss(command);
 
         ss >> commandWord;
@@ -101,7 +136,7 @@ int main()
                 index = element;
                 string cell = array.MGETL(stoi(index));
                 cout << endl << cell << endl;
-                continue;
+                return 0;
             }
             else if (command.find("MREPL") != string::npos) {
                 array.MREPL(stoi(index), element);
@@ -109,14 +144,14 @@ int main()
             else if (command.find("MSIZE") != string::npos) {
                 int cell = array.MSIZE();
                 cout << endl << cell << endl;
-                continue;
+                return 0;
             }
             else if (command.find("MREAD") != string::npos) {
                 array.MREAD();
             }
             else {
                 cout << endl << "Command not found!" << endl;
-                continue;;
+               return 0;
             }
             ofstream FileWrite(name + ".txt");
             for (int i = 0; i < array.size; i++) {
@@ -138,7 +173,7 @@ int main()
             }
             else {
                 cout << endl << "Command not found!" << endl;
-                continue;
+                return 0;
             }
             WritingFromStructureToFile(queue, filename);
         }
@@ -157,7 +192,7 @@ int main()
             }
             else {
                 cout << endl << "Command not found!" << endl;
-                continue;
+                return 0;
             }
             WritingFromStructureToFile(stack, filename);
         }
@@ -182,15 +217,15 @@ int main()
             }
             else if (command.find("LONESEARCH") != string::npos) {
                 onelist.LONESEARCH(element);
-                continue;
+                return 0;
             }
             else if (command.find("LONEREAD") != string::npos) {
                 onelist.LONEREAD();
-                continue;
+                return 0;
             }
             else {
                 cout << endl << "Command not found!" << endl;
-                continue;
+                return 0;
             }
 
             WritingFromStructureToFile(onelist, filename);
@@ -216,15 +251,15 @@ int main()
             }
             else if (command.find("LTWOSEARCH") != string::npos) {
                 twolist.LTWOSEARCH(element);
-                continue;
+                return 0;
             }
             else if (command.find("LTWOREAD") != string::npos) {
                 twolist.LTWOREAD();
-                continue;
+                return 0;
             }
             else {
                 cout << endl << "Command not found!" << endl;
-                continue;
+                return 0;
             }
             ofstream FileWrite(name + ".txt");
             DoubleNode* current = twolist.head;
@@ -257,7 +292,7 @@ int main()
             }
             else {
                 cout << endl << "Command not found!" << endl;
-                continue;
+                return 0;
             }
             ofstream FileWrite(name + ".txt");
             avl.TSaveToFile(avl.root, FileWrite);
@@ -290,7 +325,7 @@ int main()
             }
             else {
                 cout << endl << "Command not found!" << endl;
-                continue;
+                return 0;
             }
             ofstream FileWrite(filename);
             if (FileWrite.is_open()) {
@@ -306,9 +341,9 @@ int main()
         }
         else {
             cout << endl << "The command was not found!" << endl;
-            continue;
+            return 0;
         }
-    }
+    
     }
     catch (...) {
         cerr << endl << "UNKNOWN ERROR!!!" << endl;
