@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "ostream": "cpp",
-        "locale": "cpp",
-        "iostream": "cpp",
-        "new": "cpp",
-        "iosfwd": "cpp"
-    }
-}
