@@ -12,6 +12,10 @@ void Array::MPUSHend(string& value) {
 }
 
 void Array::MPUSHindex(const int& index, string& value) {
+    if (index < 0 || index >= size ) {
+        cout << endl << "INCORRECT INPUT!!!" << endl; //
+        return;
+    }
     for (int i = size; i > index; i--) { 
         data[i] = data[i - 1];
     }
@@ -20,10 +24,18 @@ void Array::MPUSHindex(const int& index, string& value) {
 }
 
 string Array::MGETL(const int& index) {
+    if (index < 0 || index >= size ) {
+        cout << endl << "INCORRECT INPUT!!!" << endl; //
+        return "ERROR";
+    }
     return data[index]; 
 }
 
 void Array::MDEL(const int& index) {
+    if (index < 0 || index >= size ) {
+        cout << endl << "INCORRECT INPUT!!!" << endl; //
+        return;
+    }
     for (int i = index; i < size - 1; i++) { 
         data[i] = data[i + 1];
     }
@@ -31,6 +43,10 @@ void Array::MDEL(const int& index) {
 }
 
 void Array::MREPL(const int& index, string& value) {
+    if (index < 0 || index >= size ) {
+        cout << endl << "INCORRECT INPUT!!!" << endl; //
+        return;
+    }
     data[index] = " " + value + " "; 
 }
 

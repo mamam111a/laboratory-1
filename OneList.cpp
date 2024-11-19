@@ -22,6 +22,8 @@ void OneList::LONEPUSHhead(string& cell) {
 
     if (head == nullptr) {
         head = tail = node;
+        predTail = nullptr;/////////////
+        predTail->next = tail;
     }
     else {
         node->next = head;
@@ -36,11 +38,13 @@ void OneList::LONEPUSHtail(string& cell) {
     node->next = nullptr;
     if (tail == nullptr) {
         head = tail = node;
+        predTail = nullptr;//////
     }
     else {
-
         tail->next = node;
+        predTail = tail; ////////
         tail = node;
+        
     }
 
 }
@@ -55,6 +59,7 @@ void OneList::LONEDELhead() {
     delete node;
     if (head == nullptr) {
         tail = nullptr;
+        predTail = nullptr;///////////////////
     }
 
 }
@@ -66,18 +71,14 @@ void OneList::LONEDELtail() {
     if (head == tail) {
         delete head;
         head = tail = nullptr;
+        predTail = nullptr;////////////////////
         return;
     }
-    SingleNode* current = head;
-
-    while (current->next != tail) {
-        current = current->next;
-    }
+    SingleNode* current = predTail; /////убрали while
+    predTail->next = tail->next;
     delete tail;
     tail = current;
     tail->next = nullptr;
-
-   
 }
 
 void OneList::LONEDELvalue(string&value) {
@@ -102,8 +103,10 @@ void OneList::LONEDELvalue(string&value) {
     node->next = toDelete->next;
     if (toDelete == tail) {
         tail = toDelete;
+        predTail->next = tail->next;/////////////
     }
     delete toDelete;
+    tail = predTail;
 
 }
 

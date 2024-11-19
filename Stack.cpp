@@ -17,8 +17,19 @@ void Stack::Clear() {
 void Stack::SPUSH(string& cell) {
     SingleNode* node = new SingleNode;
     node->cell = cell;
-    node->next = nullptr;
+    if (head == nullptr) {
+        head = node;
+        tail = node;
+    }
+    else {
+        node->next = head; //////////
+        head = node;
+    }
+}
 
+void Stack::WriteFromFile(string& cell) { ///////////////
+    SingleNode* node = new SingleNode;
+    node->cell = cell;
     if (head == nullptr) {
         head = node;
         tail = node;
@@ -34,14 +45,9 @@ void Stack::SPOP() {
         head = tail = nullptr; 
         return;
     }
-    SingleNode* current = head;
-
-    while (current->next != tail) {
-        current = current->next;
-    }
-    delete tail;
-    tail = current;
-    tail->next = nullptr;
+    SingleNode* current = head; ///////////
+    head = head->next;
+    delete current;
 }
 void Stack::SREAD() {
     SingleNode* current = head;

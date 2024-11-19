@@ -69,11 +69,9 @@ void TwoList::LTWODELtail() {
         head = tail = nullptr;
         return;
     }
-    DoubleNode* current = head;
 
-    while (current->next != tail) {
-        current = current->next;
-    }
+    DoubleNode* current = tail->prev; //убрали while
+    current->next = tail->next;
     delete tail;
     tail = current;
     tail->next = nullptr;

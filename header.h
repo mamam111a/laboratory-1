@@ -77,6 +77,7 @@ struct Stack {
     void SPOP();
     void SREAD();
     void Clear();
+    void WriteFromFile(string& cell);
 };
 
 Stack::~Stack() {
@@ -86,6 +87,8 @@ struct OneList {
     ~OneList();
     SingleNode* head = nullptr;
     SingleNode* tail = nullptr;
+    SingleNode* predTail = nullptr; //добавили ссылку на пред хвост, чтобы убрать while 
+
     void LONEPUSHhead(string& cell);
     void LONEPUSHtail(string& cell);
     void LONEDELhead();

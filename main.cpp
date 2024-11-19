@@ -179,7 +179,7 @@ int main(int argc, char* argv[])
         }
         else if (command.at(0) == 'S') {
 
-            WritingFromFileToStructure(stack,& Stack::SPUSH, filename);
+            WritingFromFileToStructure(stack,& Stack::WriteFromFile, filename);
 
             if (command.find("SPUSH") != string::npos) {
                 stack.SPUSH(element);
